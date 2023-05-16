@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
+using NeedleWork.API.Extensions;
 using NeedleWork.Application;
+using NeedleWork.Core.Exceptions;
 using NeedleWork.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +28,15 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var problemDetails = new ValidationProblemDetails(context.ModelState);
+        throw new InputValidationException(problemDetails.Errors);
+    };
+});
+
 var configuration = builder.Configuration;
 
 builder.Services
@@ -39,6 +51,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.HandleExceptions();
 
 app.UseHttpsRedirection();
 

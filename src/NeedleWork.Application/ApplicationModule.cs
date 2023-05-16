@@ -1,5 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using NeedleWork.Application.Behaviors;
 using NeedleWork.Application.Features.Suppliers.Queries.GetAll;
+using NeedleWork.Application.Validatores.Suppliers;
 
 namespace NeedleWork.Application;
 
@@ -9,7 +14,26 @@ public static class ApplicationModule
     {
         services
             .AddMediatR(cfg =>
-                cfg.RegisterServicesFromAssemblyContaining(typeof(GetAllSuppliersQuery)));
+                cfg.RegisterServicesFromAssemblyContaining(typeof(GetAllSuppliersQuery)))
+            .AddValidators()
+            .AddPipelineBehaviors();
+
+        return services;
+    }
+
+    private static IServiceCollection AddPipelineBehaviors(this IServiceCollection services)
+    {
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorPipelineBehavior<,>));
+
+        return services;
+    }
+
+    private static IServiceCollection AddValidators(this IServiceCollection services)
+    {
+        services
+            .AddFluentValidationClientsideAdapters();
+        services
+            .AddValidatorsFromAssemblyContaining<CreateSupplierCommandValidator>();
 
         return services;
     }
