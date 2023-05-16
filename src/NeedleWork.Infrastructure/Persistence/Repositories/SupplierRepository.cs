@@ -1,7 +1,9 @@
-﻿using NeedleWork.Application.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using NeedleWork.Application.Models;
 using NeedleWork.Application.Repositories;
 using NeedleWork.Core.Entities;
 using NeedleWork.Infrastructure.Extensions;
+using System.Linq.Expressions;
 
 namespace NeedleWork.Infrastructure.Persistence.Repositories;
 
@@ -26,10 +28,25 @@ public class SupplierRepository : ISupplierRepository
         return await suppliers.GetPaged(page, pageSize);
     }
 
+    public async Task<Supplier?> GetByIdAsync(long id, params Expression<Func<Supplier, object?>>[]? includes)
+    {
+        return await _context.Suppliers
+            .IncludeMultiple(includes)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(s => s.Id == id);
+    }
+
     public async Task CreateAsync(Supplier supplier)
     {
         await _context.Suppliers
             .AddAsync(supplier);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateAsync(Supplier supplier)
+    {
+        _context.Suppliers
+            .Update(supplier);
         await _context.SaveChangesAsync();
     }
 }

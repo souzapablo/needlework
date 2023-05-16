@@ -12,4 +12,10 @@ public class Supplier : BaseEntity
     public string Name { get; private set; }
     public string Contact { get; private set; }
     public List<Product> Products { get; private set; }
+
+    public void UpdateContact(string contact) =>
+        Contact = contact;
+
+    public void UpdateName(string name) =>
+        Name = name;
 }

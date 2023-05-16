@@ -1,7 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NeedleWork.Application.Features.Suppliers.Commands.Create;
+using NeedleWork.Application.Features.Suppliers.Commands.Delete;
+using NeedleWork.Application.Features.Suppliers.Commands.Update;
 using NeedleWork.Application.Features.Suppliers.Queries.GetAll;
+using NeedleWork.Application.Features.Suppliers.Queries.GetById;
+using NeedleWork.Application.InputModels.Suppliers;
 
 namespace NeedleWork.API.Controllers;
 
@@ -25,9 +29,11 @@ public class SupplierController : ControllerBase
     }
 
     [HttpGet("{id:long}")]
-    public IActionResult GetById(long id)
+    public async Task<IActionResult> GetById([FromRoute] long id)
     {
-        return Ok();
+        var query = new GetSupplierByIdQuery(id);
+        var supplier = await _mediator.Send(query);
+        return Ok(supplier);
     }
 
     [HttpPost]
@@ -38,14 +44,18 @@ public class SupplierController : ControllerBase
     }
 
     [HttpPut("{id:long}")]
-    public IActionResult Update(long id)
+    public async Task<IActionResult> Update(long id, [FromBody] UpdateSupplierInputModel input)
     {
-        return Ok();
+        var command = new UpdateSupplierCommand(id, input.Name, input.Contact);
+        await _mediator.Send(command);
+        return NoContent();
     }
 
     [HttpDelete("{id:long}")]
-    public IActionResult Delete(long id) 
+    public async Task<IActionResult> Delete(long id) 
     {
-        return Ok();
+        var command = new DeleteSupplierCommand(id);
+        await _mediator.Send(command);
+        return NoContent();
     }
 }
