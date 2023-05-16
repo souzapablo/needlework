@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using NeedleWork.Application.Features.Suppliers.Queries.GetAll;
 
 namespace NeedleWork.API.Controllers;
 
@@ -6,10 +8,19 @@ namespace NeedleWork.API.Controllers;
 [Route("api/v1/suppliers")]
 public class SupplierController : ControllerBase
 {
-    [HttpGet]
-    public IActionResult GetAll()
+    private readonly IMediator _mediator;
+
+    public SupplierController(IMediator mediator)
     {
-        return Ok();
+        _mediator = mediator;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll([FromQuery] string? name, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+    {
+        var query = new GetAllSuppliersQuery(name, page, pageSize);
+        var suppliers = await _mediator.Send(query);
+        return Ok(suppliers);
     }
 
     [HttpGet("{id:long}")]

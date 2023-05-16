@@ -1,4 +1,6 @@
 using Microsoft.OpenApi.Models;
+using NeedleWork.Application;
+using NeedleWork.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,12 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
+var configuration = builder.Configuration;
+
+builder.Services
+    .AddApplication()
+    .AddInfrastructure(configuration);
 
 var app = builder.Build();
 
