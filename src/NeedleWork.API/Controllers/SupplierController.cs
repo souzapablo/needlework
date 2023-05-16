@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using NeedleWork.Application.Features.Suppliers.Commands.Create;
 using NeedleWork.Application.Features.Suppliers.Queries.GetAll;
 
 namespace NeedleWork.API.Controllers;
@@ -30,9 +31,10 @@ public class SupplierController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create()
+    public async Task<IActionResult> Create([FromBody] CreateSupplierCommand command)
     {
-        return Ok();
+        var id = await _mediator.Send(command);
+        return CreatedAtAction(nameof(GetById), new { Id = id }, command);
     }
 
     [HttpPut("{id:long}")]

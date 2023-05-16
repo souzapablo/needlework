@@ -25,4 +25,11 @@ public class SupplierRepository : ISupplierRepository
 
         return await suppliers.GetPaged(page, pageSize);
     }
+
+    public async Task CreateAsync(Supplier supplier)
+    {
+        await _context.Suppliers
+            .AddAsync(supplier);
+        await _context.SaveChangesAsync();
+    }
 }
