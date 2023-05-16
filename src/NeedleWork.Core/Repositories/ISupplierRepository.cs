@@ -1,8 +1,8 @@
-﻿using NeedleWork.Application.Models;
-using NeedleWork.Core.Entities;
+﻿using NeedleWork.Core.Entities;
+using NeedleWork.Core.Models;
 using System.Linq.Expressions;
 
-namespace NeedleWork.Application.Repositories;
+namespace NeedleWork.Core.Repositories;
 
 public interface ISupplierRepository
 {

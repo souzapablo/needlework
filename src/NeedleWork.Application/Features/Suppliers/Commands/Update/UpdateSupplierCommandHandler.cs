@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using NeedleWork.Application.Repositories;
+using NeedleWork.Core.Repositories;
 
 namespace NeedleWork.Application.Features.Suppliers.Commands.Update;
 
@@ -14,10 +14,7 @@ public class UpdateSupplierCommandHandler : IRequestHandler<UpdateSupplierComman
 
     public async Task<Unit> Handle(UpdateSupplierCommand request, CancellationToken cancellationToken)
     {
-        var supplier = await _supplierRepository.GetByIdAsync(request.Id);
-
-        if (supplier is null)
-            throw new Exception("Supplier not found");
+        var supplier = await _supplierRepository.GetByIdAsync(request.Id) ?? throw new Exception("Supplier not found");
 
         supplier.UpdateName(request.Name);
         supplier.UpdateContact(request.Contact);

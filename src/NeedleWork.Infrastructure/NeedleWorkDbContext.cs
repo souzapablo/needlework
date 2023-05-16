@@ -12,6 +12,7 @@ public class NeedleWorkDbContext : DbContext
         
     }
     public DbSet<Supplier> Suppliers { get; set; } = null!;
+    public DbSet<Product> Products { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

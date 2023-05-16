@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using NeedleWork.Application.Repositories;
 using NeedleWork.Application.ViewModels.Products;
 using NeedleWork.Application.ViewModels.Suppliers;
+using NeedleWork.Core.Repositories;
 
 namespace NeedleWork.Application.Features.Suppliers.Queries.GetById;
 
@@ -25,7 +25,7 @@ public class GetSupplierByIdQueryHandler : IRequestHandler<GetSupplierByIdQuery,
             supplier.Name,
             supplier.Contact,
             supplier.Products.Select(product =>
-                new ProductViewModel(product.Id, product.Description, product.Price)));
+                new SupplierProductViewModel(product.Id, product.Description, product.Price)));
         ;
     }
 }

@@ -1,7 +1,6 @@
 ﻿namespace NeedleWork.Application.ViewModels.Products;
 
-public record ProductViewModel(
+public record SupplierProductViewModel(
     long Id,
     string Description,
-    decimal Price,
-    string Supplier);
+    decimal Price);

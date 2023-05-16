@@ -6,4 +6,4 @@ public record SupplierDetailsViewModel(
     long Id,
     string Name,
     string Contact,
-    IEnumerable<ProductViewModel> Products);
+    IEnumerable<SupplierProductViewModel> Products);

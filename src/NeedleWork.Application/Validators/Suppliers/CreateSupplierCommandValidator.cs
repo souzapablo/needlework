@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using NeedleWork.Application.Features.Suppliers.Commands.Create;
 
-namespace NeedleWork.Application.Validatores.Suppliers;
+namespace NeedleWork.Application.Validators.Suppliers;
 
 public class CreateSupplierCommandValidator : AbstractValidator<CreateSupplierCommand>
 {

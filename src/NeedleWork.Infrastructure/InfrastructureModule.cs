@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NeedleWork.Application.Repositories;
+using NeedleWork.Core.Repositories;
 using NeedleWork.Infrastructure.Persistence.Repositories;
 
 namespace NeedleWork.Infrastructure;
@@ -28,6 +28,7 @@ public static class InfrastructureModule
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<ISupplierRepository, SupplierRepository>();
+        services.AddScoped<IProductRepository, ProductRepository>();
 
         return services;
     }

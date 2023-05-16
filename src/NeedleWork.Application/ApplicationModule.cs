@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using NeedleWork.Application.Behaviors;
 using NeedleWork.Application.Features.Suppliers.Queries.GetAll;
-using NeedleWork.Application.Validatores.Suppliers;
+using NeedleWork.Application.Validators.Suppliers;
 
 namespace NeedleWork.Application;
 

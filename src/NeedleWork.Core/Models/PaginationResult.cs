@@ -1,4 +1,4 @@
-﻿namespace NeedleWork.Application.Models;
+﻿namespace NeedleWork.Core.Models;
 
 public class PaginationResult<T>
 {

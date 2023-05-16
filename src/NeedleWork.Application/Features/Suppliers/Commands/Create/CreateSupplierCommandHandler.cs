@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using NeedleWork.Application.Repositories;
 using NeedleWork.Core.Entities;
+using NeedleWork.Core.Repositories;
 
 namespace NeedleWork.Application.Features.Suppliers.Commands.Create;
 

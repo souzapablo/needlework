@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using NeedleWork.Application.Models;
 using NeedleWork.Application.ViewModels.Suppliers;
+using NeedleWork.Core.Models;
 
 namespace NeedleWork.Application.Features.Suppliers.Queries.GetAll;
 

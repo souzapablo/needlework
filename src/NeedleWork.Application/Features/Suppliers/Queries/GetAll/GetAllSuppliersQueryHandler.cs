@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using NeedleWork.Application.Models;
-using NeedleWork.Application.Repositories;
 using NeedleWork.Application.ViewModels.Suppliers;
+using NeedleWork.Core.Models;
+using NeedleWork.Core.Repositories;
 
 namespace NeedleWork.Application.Features.Suppliers.Queries.GetAll;
 

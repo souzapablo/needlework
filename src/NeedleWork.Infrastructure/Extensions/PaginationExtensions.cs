@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NeedleWork.Application.Models;
 using NeedleWork.Core.Entities;
+using NeedleWork.Core.Models;
 
 namespace NeedleWork.Infrastructure.Extensions;
 

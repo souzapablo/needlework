@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NeedleWork.Application.Models;
-using NeedleWork.Application.Repositories;
 using NeedleWork.Core.Entities;
+using NeedleWork.Core.Models;
+using NeedleWork.Core.Repositories;
 using NeedleWork.Infrastructure.Extensions;
 using System.Linq.Expressions;
 
