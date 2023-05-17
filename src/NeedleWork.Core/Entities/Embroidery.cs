@@ -2,7 +2,7 @@ namespace NeedleWork.Core.Entities;
 
 public class Embroidery : BaseEntity
 {
-    public Embroidery(long userId, long orderId, string description, decimal price)
+    public Embroidery(long orderId, string description, decimal price)
     {
         OrderId = orderId;
         Description = description;

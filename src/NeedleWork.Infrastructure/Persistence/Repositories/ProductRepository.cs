@@ -34,7 +34,7 @@ public class ProductRepository : IProductRepository
         return await _context.Products
             .IncludeMultiple(includes)
             .AsNoTracking()
-            .FirstOrDefaultAsync(s => s.Id == id);
+            .SingleOrDefaultAsync(s => s.Id == id);
     }
 
     public async Task CreateAsync(Product product)

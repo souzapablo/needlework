@@ -29,6 +29,7 @@ public static class InfrastructureModule
     {
         services.AddScoped<ISupplierRepository, SupplierRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }

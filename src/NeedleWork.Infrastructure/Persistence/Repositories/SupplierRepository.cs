@@ -33,7 +33,7 @@ public class SupplierRepository : ISupplierRepository
         return await _context.Suppliers
             .IncludeMultiple(includes)
             .AsNoTracking()
-            .FirstOrDefaultAsync(s => s.Id == id);
+            .SingleOrDefaultAsync(s => s.Id == id);
     }
 
     public async Task CreateAsync(Supplier supplier)
