@@ -1,15 +1,15 @@
 ﻿using FluentValidation;
-using NeedleWork.Application.Features.Products.Commands.Create;
+using NeedleWork.Application.Features.Products.Commands.Update;
 
 namespace NeedleWork.Application.Validators.Products;
 
-public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
+public class UpdateProductCommandValidator : AbstractValidator<UpdateProductCommand>
 {
-    public CreateProductCommandValidator()
+    public UpdateProductCommandValidator()
     {
-        RuleFor(c => c.SupplierId)
+        RuleFor(c => c.Id)
             .GreaterThan(0)
-            .WithMessage("Invalid supplier id");
+            .WithMessage("Invalid id");
 
         RuleFor(c => c.Description)
             .MinimumLength(2)
