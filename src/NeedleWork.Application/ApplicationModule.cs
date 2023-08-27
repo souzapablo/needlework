@@ -1,5 +1,8 @@
 using System.Reflection;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using NeedleWork.Application.Features.Suppliers.Commands.Create;
 
 namespace NeedleWork.Application;
 
@@ -7,7 +10,8 @@ public static class ApplicationModule
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddMediatR();
+        services.AddMediatR()
+            .AddValidations();
         
         return services;
     }
@@ -19,4 +23,13 @@ public static class ApplicationModule
 
         return services;
     }
+
+    private static IServiceCollection AddValidations(this IServiceCollection services)
+    {
+        services.AddFluentValidationAutoValidation();
+        services.AddValidatorsFromAssemblyContaining(typeof(CreateSupplierCommand));
+
+        return services;
+    }
+    
 }
