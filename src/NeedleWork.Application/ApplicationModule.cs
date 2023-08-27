@@ -1,7 +1,9 @@
 using System.Reflection;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using NeedleWork.Application.Behaviors;
 using NeedleWork.Application.Features.Suppliers.Commands.Create;
 
 namespace NeedleWork.Application;
@@ -11,7 +13,8 @@ public static class ApplicationModule
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddMediatR()
-            .AddValidations();
+            .AddValidations()
+            .AddPipelineBehaviors();
         
         return services;
     }
@@ -26,10 +29,15 @@ public static class ApplicationModule
 
     private static IServiceCollection AddValidations(this IServiceCollection services)
     {
-        services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssemblyContaining(typeof(CreateSupplierCommand));
 
         return services;
     }
-    
+
+    private static IServiceCollection AddPipelineBehaviors(this IServiceCollection services)
+    {
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorPipelineBehavior<,>));
+
+        return services;
+    }
 }

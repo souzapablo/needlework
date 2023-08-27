@@ -19,6 +19,29 @@ public class GlobalExceptionHandlingMiddleware : IMiddleware
         {
             await next(context);
         }
+        catch (InputValidationException ex)
+        {
+            context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+            _logger.LogError(ex, ex.Message);
+
+            ProblemDetails problem = new() 
+            {
+                Status = (int) HttpStatusCode.BadRequest,
+                Type = "Validation error",
+                Title = "One or more validation errors occurred",
+                Detail = "The request contains invalid parameters. More information can be found in the errors.",
+                Extensions =
+                {
+                    ["errors"] = ex.Errors
+                }
+            };
+
+            var json = JsonSerializer.Serialize(problem);   
+
+            context.Response.ContentType = "application/json";
+            
+            await context.Response.WriteAsync(json);
+        }
         catch (NotFoundException ex)
         {
             context.Response.StatusCode = (int) HttpStatusCode.NotFound;
