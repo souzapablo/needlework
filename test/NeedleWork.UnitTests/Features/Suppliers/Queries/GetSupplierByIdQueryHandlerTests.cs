@@ -1,5 +1,6 @@
 using NeedleWork.Application.Features.Suppliers.Queries.GetById;
 using NeedleWork.Application.ViewModels.Suppliers;
+using NeedleWork.Core.Exceptions;
 
 namespace NeedleWork.UnitTests.Features.Suppliers.Queries;
 
@@ -43,7 +44,7 @@ public class GetSupplierByIdQueryHandlerTests
             await queryHandler.Handle(query, new CancellationToken());
 
         // Assert
-        await result.Should().ThrowAsync<Exception>()
-            .WithMessage("Supplier not found");
+        await result.Should().ThrowAsync<NotFoundException>()
+            .WithMessage("Supplier with id 1 not found");
     } 
 }
