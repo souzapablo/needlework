@@ -1,8 +1,5 @@
-using System.ComponentModel;
 using NeedleWork.Application.Features.Suppliers.Queries.GetById;
 using NeedleWork.Application.ViewModels.Suppliers;
-using NSubstitute.ExceptionExtensions;
-using NSubstitute.ReturnsExtensions;
 
 namespace NeedleWork.UnitTests.Features.Suppliers.Queries;
 

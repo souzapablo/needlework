@@ -9,7 +9,5 @@ public class SupplierConfigurations : IEntityTypeConfiguration<Supplier>
     public void Configure(EntityTypeBuilder<Supplier> builder)
     {
         builder.HasKey(x => x.Id);
-
-        builder.HasQueryFilter(x => x.IsActive);
     }
 }

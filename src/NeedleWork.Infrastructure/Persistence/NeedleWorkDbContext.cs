@@ -15,6 +15,17 @@ public class NeedleWorkDbContext : DbContext
         
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder
+            .Entity<Supplier>()
+            .HasQueryFilter(x => x.IsActive);
+        
+        modelBuilder
+            .Entity<Product>()
+            .HasQueryFilter(x => x.IsActive);
+    }
+
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         configurationBuilder
