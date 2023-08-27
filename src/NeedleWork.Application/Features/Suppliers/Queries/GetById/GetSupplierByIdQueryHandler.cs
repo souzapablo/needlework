@@ -22,7 +22,7 @@ public class GetSupplierByIdQueryHandler : IRequestHandler<GetSupplierByIdQuery,
         Supplier? supplier = await _supplierRepository.GetByIdAsync(request.Id);
 
         if (supplier is null)
-            throw new NotFoundException(string.Format(Errors.SupplierNotFound, request.Id));
+            throw new NotFoundException(Errors.SupplierNotFound(request.Id));
 
         return new SupplierDetailsViewModel(
             supplier.Id,
