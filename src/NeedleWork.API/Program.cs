@@ -1,3 +1,4 @@
+using NeedleWork.API.Middlewares;
 using NeedleWork.Application;
 using NeedleWork.Infrastructure;
 
@@ -9,6 +10,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
 
 IConfiguration configuration = builder.Configuration;
 builder.Services.AddInfrastructure(configuration)
@@ -26,6 +29,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 app.MapControllers();
 
