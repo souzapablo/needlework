@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using NeedleWork.Core.Entities;
 using NeedleWork.Core.Repositories;
 
@@ -16,5 +17,11 @@ public class SupplierRepository : ISupplierRepository
     {
         _context.Suppliers.Add(supplier);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<Supplier?> GetByIdAsync(long Id)
+    {
+        return await _context.Suppliers
+            .SingleOrDefaultAsync(x => x.Id == Id);
     }
 }

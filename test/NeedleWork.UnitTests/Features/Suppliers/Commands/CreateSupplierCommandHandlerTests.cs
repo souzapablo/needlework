@@ -1,12 +1,14 @@
+using System.ComponentModel;
 using NeedleWork.Application.Features.Suppliers.Commands.Create;
 
-namespace NeedleWork.UnitTests.Features.Suppliers;
+namespace NeedleWork.UnitTests.Features.Suppliers.Commands;
 
 public class CreateSupplierCommandHandlerTests
 {
     private readonly ISupplierRepository _supplierRepository = Substitute.For<ISupplierRepository>();
 
     [Fact]
+    [DisplayName("Given a valid input should create a new supplier")]
     public async Task GivenAValidInputShouldCreateNewSupplier()
     {
         // Arrange
@@ -21,6 +23,6 @@ public class CreateSupplierCommandHandlerTests
         await commandHandler.Handle(command, new CancellationToken());
 
         // Assert
-        await _supplierRepository.Received(1).CreateAsync(Arg.Any<Supplier>());            
+        await _supplierRepository.Received(1).CreateAsync(Arg.Any<Supplier>());
     }
 }
