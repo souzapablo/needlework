@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NeedleWork.Infrastructure\NeedleWork.Infrastructure.csproj" />
+    <ProjectReference Include="..\NeedleWork.Application\NeedleWork.Application.csproj" />
   </ItemGroup>
 
 </Project>

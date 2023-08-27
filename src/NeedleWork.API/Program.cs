@@ -1,3 +1,4 @@
+using NeedleWork.Application;
 using NeedleWork.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +11,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 IConfiguration configuration = builder.Configuration;
-builder.Services.AddInfrastructure(configuration);
+builder.Services.AddInfrastructure(configuration)
+    .AddApplication();
 
 var app = builder.Build();
 
