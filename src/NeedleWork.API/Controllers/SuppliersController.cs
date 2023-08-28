@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NeedleWork.Application.Features.Suppliers.Commands.Create;
+using NeedleWork.Application.Features.Suppliers.Queries.GetAll;
 using NeedleWork.Application.Features.Suppliers.Queries.GetById;
 using NeedleWork.Application.ViewModels.Suppliers;
 
@@ -15,6 +16,14 @@ public class SuppliersController : ControllerBase
     public SuppliersController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllSuppliers()
+    {
+        GetAllSuppliersQuery query = new();
+        List<SupplierViewModel> result = await _mediator.Send(query);
+        return Ok(result);
     }
 
     [HttpGet("{id:long}")]

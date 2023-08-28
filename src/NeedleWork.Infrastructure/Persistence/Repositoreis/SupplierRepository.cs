@@ -13,6 +13,12 @@ public class SupplierRepository : ISupplierRepository
         _context = context;
     }
 
+    public async Task<List<Supplier>> GetAllAsync()
+    {
+        return await _context.Suppliers
+            .ToListAsync();
+    }
+
     public async Task CreateAsync(Supplier supplier)
     {
         _context.Suppliers.Add(supplier);
