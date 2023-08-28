@@ -1,6 +1,6 @@
 using NeedleWork.Application.Features.Suppliers.Commands.Create;
 
-namespace NeedleWork.UnitTests.Features.Suppliers.Commands;
+namespace NeedleWork.UnitTests.Features.Suppliers.Commands.Suppliers;
 
 public class CreateSupplierCommandHandlerTests
 {

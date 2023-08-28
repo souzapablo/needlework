@@ -54,6 +54,12 @@ public class SupplierRepository : ISupplierRepository
             .SingleOrDefaultAsync(x => x.Id == Id);
     }
 
+    public async Task UpdateAsync(Supplier supplier)
+    {
+        _context.Suppliers.Update(supplier);
+        await _context.SaveChangesAsync();
+    }
+
     private static Expression<Func<Supplier, object>> GetSortProperty(string? sortColumn)
     {
         return sortColumn?.ToLower() switch

@@ -13,4 +13,9 @@ public class Supplier : BaseEntity
         Name = name;
         Contact = contact;
     }
+
+    public void UpdateContact(string newContact)
+    {
+        Contact = newContact;
+    }
 }

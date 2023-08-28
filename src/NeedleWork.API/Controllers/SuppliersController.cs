@@ -1,8 +1,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NeedleWork.Application.Features.Suppliers.Commands.Create;
+using NeedleWork.Application.Features.Suppliers.Commands.UpdateName;
 using NeedleWork.Application.Features.Suppliers.Queries.Get;
 using NeedleWork.Application.Features.Suppliers.Queries.GetById;
+using NeedleWork.Application.InputModels.Suppliers;
 using NeedleWork.Application.ViewModels.Suppliers;
 using NeedleWork.Infrastructure.Shared;
 
@@ -46,5 +48,13 @@ public class SuppliersController : ControllerBase
         long id = await _mediator.Send(command);
 
         return CreatedAtAction(nameof(GetSupplierById), new { Id = id }, command);
+    }
+
+    [HttpPatch("{id:long}/contact")]
+    public async Task<IActionResult> UpdateSupplierContact(long id, [FromBody] UpdateSupplierContactInputModel input)
+    {
+        UpdateSupplierContactCommand command = new(id, input.NewContact);
+        await _mediator.Send(command);
+        return NoContent();
     }
 }
