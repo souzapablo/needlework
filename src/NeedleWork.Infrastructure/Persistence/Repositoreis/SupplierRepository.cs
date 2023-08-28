@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using NeedleWork.Core.Entities;
 using NeedleWork.Core.Repositories;
@@ -13,9 +14,30 @@ public class SupplierRepository : ISupplierRepository
         _context = context;
     }
 
-    public async Task<List<Supplier>> GetAllAsync()
+    public async Task<List<Supplier>> GetAllAsync(
+        string? searchTerm,
+        string? sortColumn,
+        string? sortOrder)
     {
-        return await _context.Suppliers
+        IQueryable<Supplier> suppliers = _context.Suppliers;
+
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            suppliers = suppliers.Where(x => 
+                x.Name.Contains(searchTerm) ||
+                x.Contact.Contains(searchTerm));
+        }
+
+        if (sortOrder?.ToLower() == "desc")
+        {
+            suppliers = suppliers.OrderByDescending(GetSortProperty(sortColumn));
+        }
+        else
+        {
+            suppliers = suppliers.OrderBy(GetSortProperty(sortColumn));
+        }
+
+        return await suppliers
             .ToListAsync();
     }
 
@@ -29,5 +51,14 @@ public class SupplierRepository : ISupplierRepository
     {
         return await _context.Suppliers
             .SingleOrDefaultAsync(x => x.Id == Id);
+    }
+
+    private static Expression<Func<Supplier, object>> GetSortProperty(string? sortColumn)
+    {
+        return sortColumn?.ToLower() switch
+        {
+            "name" => supplier => supplier.Name,
+            _ => supplier => supplier.Id,
+        };;
     }
 }
