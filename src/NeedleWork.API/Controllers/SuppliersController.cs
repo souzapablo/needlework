@@ -4,6 +4,7 @@ using NeedleWork.Application.Features.Suppliers.Commands.Create;
 using NeedleWork.Application.Features.Suppliers.Queries.Get;
 using NeedleWork.Application.Features.Suppliers.Queries.GetById;
 using NeedleWork.Application.ViewModels.Suppliers;
+using NeedleWork.Infrastructure.Shared;
 
 namespace NeedleWork.API.Controllers;
 
@@ -22,10 +23,12 @@ public class SuppliersController : ControllerBase
     public async Task<IActionResult> GetSuppliers(
         string? serachTerm,
         string? sortColumn,
-        string? sortOrder)
+        string? sortOrder,
+        int page,
+        int pageSize)
     {
-        GetSuppliersQuery query = new(serachTerm, sortColumn, sortOrder);
-        List<SupplierViewModel> result = await _mediator.Send(query);
+        GetSuppliersQuery query = new(serachTerm, sortColumn, sortOrder, page, pageSize);
+        PagedList<SupplierViewModel> result = await _mediator.Send(query);
         return Ok(result);
     }
 

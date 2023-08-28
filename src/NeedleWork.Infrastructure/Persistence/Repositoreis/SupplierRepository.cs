@@ -14,10 +14,12 @@ public class SupplierRepository : ISupplierRepository
         _context = context;
     }
 
-    public async Task<List<Supplier>> GetAllAsync(
+    public async Task<List<Supplier>> GetAsync(
         string? searchTerm,
         string? sortColumn,
-        string? sortOrder)
+        string? sortOrder,
+        int page,
+        int pageSize)
     {
         IQueryable<Supplier> suppliers = _context.Suppliers;
 
@@ -37,8 +39,7 @@ public class SupplierRepository : ISupplierRepository
             suppliers = suppliers.OrderBy(GetSortProperty(sortColumn));
         }
 
-        return await suppliers
-            .ToListAsync();
+        return await suppliers.ToListAsync();
     }
 
     public async Task CreateAsync(Supplier supplier)
