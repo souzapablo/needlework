@@ -1,7 +1,7 @@
 using NeedleWork.Application.Features.Suppliers.Commands.UpdateName;
 using NeedleWork.Core.Exceptions;
 
-namespace NeedleWork.UnitTests.Features.Suppliers.Commands.Suppliers;
+namespace NeedleWork.UnitTests.Features.Commands.Suppliers;
 
 public class UpdateSupplierNameCommandHandlerTests
 {
@@ -14,7 +14,7 @@ public class UpdateSupplierNameCommandHandlerTests
         // Given
         Supplier supplier = new("Test", "Test");
         UpdateSupplierContactCommand command = new(1, "Valid new contact");
-        UpdateSupplierContactCommandHandler commandHandler = new (_supplierRepository);
+        UpdateSupplierContactCommandHandler commandHandler = new(_supplierRepository);
         _supplierRepository.GetByIdAsync(Arg.Any<long>())
             .Returns(supplier);
 
@@ -44,5 +44,5 @@ public class UpdateSupplierNameCommandHandlerTests
         // Assert
         await result.Should().ThrowAsync<NotFoundException>()
             .WithMessage("Supplier with id 1 not found");
-    }    
+    }
 }

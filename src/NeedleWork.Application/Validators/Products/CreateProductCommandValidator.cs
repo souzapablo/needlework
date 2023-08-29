@@ -1,5 +1,5 @@
 using FluentValidation;
-using NeedleWork.Application.Features.Products.Create;
+using NeedleWork.Application.Features.Products.Commands.Create;
 
 namespace NeedleWork.Application.Validators.Products;
 

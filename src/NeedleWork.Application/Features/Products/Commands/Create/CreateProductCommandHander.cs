@@ -4,7 +4,7 @@ using NeedleWork.Core.Exceptions;
 using NeedleWork.Core.Repositories;
 using NeedleWork.Core.Shared;
 
-namespace NeedleWork.Application.Features.Products.Create;
+namespace NeedleWork.Application.Features.Products.Commands.Create;
 
 public class CreateProductCommandHander : IRequestHandler<CreateProductCommand, long>
 {

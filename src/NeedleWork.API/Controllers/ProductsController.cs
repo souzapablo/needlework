@@ -1,6 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using NeedleWork.Application.Features.Products.Create;
+using NeedleWork.Application.Features.Products.Commands.Create;
+using NeedleWork.Application.Features.Products.Queries.GetById;
+using NeedleWork.Application.ViewModels.Products;
 
 namespace NeedleWork.API.Controllers;
 
@@ -15,10 +17,18 @@ public class ProductsController : ControllerBase
         _mediator = mediator;
     }
 
+    [HttpGet("{id:long}")]
+    public async Task<IActionResult> GetById(long id)
+    {
+        GetProductByIdQuery query = new(id);
+        ProductDetailsViewModel result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateProduct([FromBody] CreateProductCommand command)
     {
         long id = await _mediator.Send(command);
-        return Ok(id);
+        return CreatedAtAction(nameof(CreateProduct), new { Id = id }, command);
     }
 }

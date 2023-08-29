@@ -2,7 +2,7 @@ using NeedleWork.Application.Features.Suppliers.Queries.GetById;
 using NeedleWork.Application.ViewModels.Suppliers;
 using NeedleWork.Core.Exceptions;
 
-namespace NeedleWork.UnitTests.Features.Suppliers.Queries.Suppliers;
+namespace NeedleWork.UnitTests.Features.Queries.Suppliers;
 
 public class GetSupplierByIdQueryHandlerTests
 {
@@ -17,7 +17,7 @@ public class GetSupplierByIdQueryHandlerTests
         GetSupplierByIdQueryHandler queryHandler = new(_supplierRepository);
 
         _supplierRepository.GetByIdAsync(1)
-            .Returns(new Supplier("Teste", "Teste"));
+            .Returns(SupplierFaker.GenerateSupplier);
 
         // Act
         SupplierDetailsViewModel result = await queryHandler.Handle(query, new CancellationToken());

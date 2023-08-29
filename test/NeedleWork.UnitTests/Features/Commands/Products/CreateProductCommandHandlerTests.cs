@@ -1,7 +1,7 @@
-using NeedleWork.Application.Features.Products.Create;
+using NeedleWork.Application.Features.Products.Commands.Create;
 using NeedleWork.Core.Exceptions;
 
-namespace NeedleWork.UnitTests.Features.Suppliers.Commands.Products;
+namespace NeedleWork.UnitTests.Features.Commands.Products;
 
 public class CreateProductCommandHandlerTests
 {
@@ -18,7 +18,7 @@ public class CreateProductCommandHandlerTests
 
         _supplierRepository.VerifyIfExists(Arg.Any<long>())
             .Returns(true);
-        
+
         // When
         await commandHandler.Handle(command, new CancellationToken());
 
@@ -39,9 +39,9 @@ public class CreateProductCommandHandlerTests
 
         _supplierRepository.VerifyIfExists(Arg.Any<long>())
             .Returns(false);
-        
+
         // When
-        Func<Task> result = async () => 
+        Func<Task> result = async () =>
             await commandHandler.Handle(command, new CancellationToken());
 
         // Then

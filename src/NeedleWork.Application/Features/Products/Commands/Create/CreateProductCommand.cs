@@ -1,7 +1,7 @@
 using MediatR;
 using NeedleWork.Core.Enums;
 
-namespace NeedleWork.Application.Features.Products.Create;
+namespace NeedleWork.Application.Features.Products.Commands.Create;
 
 public record CreateProductCommand(
     long SupplierId,
