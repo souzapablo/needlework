@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NeedleWork.Application.Features.Suppliers.Commands.Create;
+using NeedleWork.Application.Features.Suppliers.Commands.Delete;
 using NeedleWork.Application.Features.Suppliers.Commands.UpdateName;
 using NeedleWork.Application.Features.Suppliers.Queries.Get;
 using NeedleWork.Application.Features.Suppliers.Queries.GetById;
@@ -54,6 +55,14 @@ public class SuppliersController : ControllerBase
     public async Task<IActionResult> UpdateSupplierContact(long id, [FromBody] UpdateSupplierContactInputModel input)
     {
         UpdateSupplierContactCommand command = new(id, input.NewContact);
+        await _mediator.Send(command);
+        return NoContent();
+    }
+
+    [HttpDelete("{id:long}")]
+    public async Task<IActionResult> DeleteSupplier(long id)
+    {
+        DeleteSupplierCommand command = new(id);
         await _mediator.Send(command);
         return NoContent();
     }
