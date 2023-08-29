@@ -53,7 +53,12 @@ public class ProductRepository : IProductRepository
         _context.Products.Add(product);
         await _context.SaveChangesAsync();
     }
-    
+    public async Task UpdateAsync(Product product)
+    {
+        _context.Products.Update(product);
+        await _context.SaveChangesAsync();
+    }
+
     private static Expression<Func<Product, object>> GetSortProperty(string? sortColumn)
     {
         return sortColumn?.ToLower() switch
@@ -64,4 +69,6 @@ public class ProductRepository : IProductRepository
             _ => product => product.Id,
         };;
     }
+
+
 }
