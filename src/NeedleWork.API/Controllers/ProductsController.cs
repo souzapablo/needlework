@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NeedleWork.Application.Features.Products.Commands.Create;
+using NeedleWork.Application.Features.Products.Commands.Delete;
 using NeedleWork.Application.Features.Products.Queries.Get;
 using NeedleWork.Application.Features.Products.Queries.GetById;
 using NeedleWork.Application.ViewModels.Products;
@@ -47,5 +48,13 @@ public class ProductsController : ControllerBase
     {
         long id = await _mediator.Send(command);
         return CreatedAtAction(nameof(CreateProduct), new { Id = id }, command);
+    }
+
+    [HttpDelete("{id:long}")]
+    public async Task<IActionResult> DeleteProduct(long id)
+    {
+        DeleteProductCommand command = new(id);
+        await _mediator.Send(command);
+        return NoContent();
     }
 }
