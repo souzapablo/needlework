@@ -7,6 +7,7 @@ using NeedleWork.Application.Features.Suppliers.Queries.Get;
 using NeedleWork.Application.Features.Suppliers.Queries.GetById;
 using NeedleWork.Application.InputModels.Suppliers;
 using NeedleWork.Application.ViewModels.Suppliers;
+using NeedleWork.Core.Shared;
 using NeedleWork.Infrastructure.Shared;
 
 namespace NeedleWork.API.Controllers;
@@ -27,8 +28,8 @@ public class SuppliersController : ControllerBase
         string? searchTerm,
         string? sortColumn,
         string? sortOrder,
-        int page,
-        int pageSize)
+        int page = Constants.Page,
+        int pageSize = Constants.PageSize)
     {
         GetSuppliersQuery query = new(searchTerm, sortColumn, sortOrder, page, pageSize);
         PagedList<SupplierViewModel> result = await _mediator.Send(query);

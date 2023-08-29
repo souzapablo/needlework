@@ -1,5 +1,3 @@
-using Bogus;
-
 namespace NeedleWork.UnitTests.Fakers;
 
 public static class ProductFaker
