@@ -51,6 +51,7 @@ public class SupplierRepository : ISupplierRepository
     public async Task<Supplier?> GetByIdAsync(long Id)
     {
         return await _context.Suppliers
+            .Include(x => x.Products)
             .SingleOrDefaultAsync(x => x.Id == Id);
     }
 
@@ -58,6 +59,12 @@ public class SupplierRepository : ISupplierRepository
     {
         _context.Suppliers.Update(supplier);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<bool> VerifyIfExists(long Id)
+    {
+        return await _context.Suppliers
+            .AnyAsync(x => x.Id == Id);
     }
 
     private static Expression<Func<Supplier, object>> GetSortProperty(string? sortColumn)
@@ -68,4 +75,5 @@ public class SupplierRepository : ISupplierRepository
             _ => supplier => supplier.Id,
         };;
     }
+
 }

@@ -24,13 +24,13 @@ public class SuppliersController : ControllerBase
 
     [HttpGet]
     public async Task<IActionResult> GetSuppliers(
-        string? serachTerm,
+        string? searchTerm,
         string? sortColumn,
         string? sortOrder,
         int page,
         int pageSize)
     {
-        GetSuppliersQuery query = new(serachTerm, sortColumn, sortOrder, page, pageSize);
+        GetSuppliersQuery query = new(searchTerm, sortColumn, sortOrder, page, pageSize);
         PagedList<SupplierViewModel> result = await _mediator.Send(query);
         return Ok(result);
     }
