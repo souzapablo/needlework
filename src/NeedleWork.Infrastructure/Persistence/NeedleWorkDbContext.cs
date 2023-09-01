@@ -9,6 +9,7 @@ public class NeedleWorkDbContext : DbContext
 {
     public DbSet<Supplier> Suppliers { get; set; }
     public DbSet<Product> Products { get; set; }
+    public DbSet<User> Users { get; set; }
     public NeedleWorkDbContext(DbContextOptions<NeedleWorkDbContext> options)
         : base(options)
     {
@@ -24,6 +25,10 @@ public class NeedleWorkDbContext : DbContext
         modelBuilder
             .Entity<Product>()
             .HasQueryFilter(x => x.IsActive);
+
+        modelBuilder
+            .Entity<User>()
+            .HasQueryFilter(x => x.IsActive);
     }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
@@ -34,5 +39,9 @@ public class NeedleWorkDbContext : DbContext
 
         configurationBuilder.Properties<decimal>()
             .HavePrecision(6, 2);
+
+        configurationBuilder.Properties<DateOnly>()
+            .HaveConversion<DateOnlyConverter>()
+            .HaveColumnType("date");
     }
 }
