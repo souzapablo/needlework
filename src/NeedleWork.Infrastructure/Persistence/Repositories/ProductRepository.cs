@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NeedleWork.Core.Entities;
 using NeedleWork.Core.Repositories;
 
-namespace NeedleWork.Infrastructure.Persistence.Repositoreis;
+namespace NeedleWork.Infrastructure.Persistence.Repositories;
 
 public class ProductRepository : IProductRepository
 {
@@ -15,17 +15,17 @@ public class ProductRepository : IProductRepository
     }
 
     public async Task<List<Product>> GetAsync(
-        string? searchTerm, 
-        string? sortColumn, 
-        string? sortOrder, 
-        int page, 
+        string? searchTerm,
+        string? sortColumn,
+        string? sortOrder,
+        int page,
         int pageSize)
     {
         IQueryable<Product> products = _context.Products;
 
         if (!string.IsNullOrWhiteSpace(searchTerm))
         {
-            products = products.Where(x => 
+            products = products.Where(x =>
                 x.Description.Contains(searchTerm));
         }
 
@@ -67,7 +67,7 @@ public class ProductRepository : IProductRepository
             "supplier" => product => product.SupplierId,
             "price" => product => product.Price,
             _ => product => product.Id,
-        };;
+        }; ;
     }
 
 

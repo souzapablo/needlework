@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using NeedleWork.Core.Entities;
 using NeedleWork.Core.Enums;
@@ -19,16 +20,7 @@ public class NeedleWorkDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
-            .Entity<Supplier>()
-            .HasQueryFilter(x => x.IsActive);
-        
-        modelBuilder
-            .Entity<Product>()
-            .HasQueryFilter(x => x.IsActive);
-
-        modelBuilder
-            .Entity<User>()
-            .HasQueryFilter(x => x.IsActive);
+            .ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

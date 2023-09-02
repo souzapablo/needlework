@@ -12,8 +12,8 @@ using NeedleWork.Infrastructure.Persistence;
 namespace NeedleWork.Infrastructure.Migrations
 {
     [DbContext(typeof(NeedleWorkDbContext))]
-    [Migration("20230901112618_AddUserTable")]
-    partial class AddUserTable
+    [Migration("20230902115612_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -110,7 +110,7 @@ namespace NeedleWork.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -131,6 +131,9 @@ namespace NeedleWork.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });

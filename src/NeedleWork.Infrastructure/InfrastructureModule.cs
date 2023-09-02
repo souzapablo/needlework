@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using NeedleWork.Core.Entities;
 using NeedleWork.Core.Repositories;
 using NeedleWork.Infrastructure.Persistence;
-using NeedleWork.Infrastructure.Persistence.Repositoreis;
 using NeedleWork.Infrastructure.Persistence.Repositories;
 
 namespace NeedleWork.Infrastructure;
@@ -36,6 +35,7 @@ public static class InfrastructureModule
     {
         services.AddTransient<ISupplierRepository, SupplierRepository>();
         services.AddTransient<IProductRepository, ProductRepository>();
+        services.AddTransient<IUserRepository, UserRepository>();
 
         return services;
     }
