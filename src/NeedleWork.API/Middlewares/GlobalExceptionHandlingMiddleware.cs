@@ -61,6 +61,25 @@ public class GlobalExceptionHandlingMiddleware : IMiddleware
             
             await context.Response.WriteAsync(json);
         }
+        catch (EmailAlreadyRegisteredException ex)
+        {
+                        context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+            _logger.LogError(ex, ex.Message);
+
+            ProblemDetails problem = new() 
+            {
+                Status = (int) HttpStatusCode.BadRequest,
+                Type = "Bad request",
+                Title = "E-mail registered",
+                Detail = ex.Message,
+            };
+
+            var json = JsonSerializer.Serialize(problem);   
+
+            context.Response.ContentType = "application/json";
+            
+            await context.Response.WriteAsync(json);
+        }
         catch (Exception ex)
         {
             context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
