@@ -13,6 +13,12 @@ namespace NeedleWork.Infrastructure.Persistence.Repositories
             _context = context;
         }
 
+        public async Task<User?> GetByIdAsync(long id)
+        {
+            return await _context.Users
+                .SingleOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task CreateAsync(User user)
         {
             _context.Users.Add(user);
