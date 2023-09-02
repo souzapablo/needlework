@@ -21,7 +21,8 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PagedList<Use
 
         List<UserViewModel> usersViewModels = users.Select(x => new UserViewModel(
             x.Id,
-            x.FullName
+            x.FullName,
+            x.Role
         )).ToList();
 
         return PagedList<UserViewModel>.Create(usersViewModels, request.Page, request.PageSize);

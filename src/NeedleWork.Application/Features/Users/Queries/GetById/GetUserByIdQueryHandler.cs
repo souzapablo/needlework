@@ -26,6 +26,7 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, UserDet
         return new UserDetailsViewModel(
             user.Id,
             user.FullName,
+            user.Role,
             user.Email,
             user.BirthDate
         );

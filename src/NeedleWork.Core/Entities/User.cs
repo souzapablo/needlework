@@ -1,4 +1,5 @@
 using NeedleWork.Core.Entities.Shared;
+using NeedleWork.Core.Enums;
 
 namespace NeedleWork.Core.Entities;
 
@@ -9,6 +10,7 @@ public class User : BaseEntity
     public string Email { get; private set; } = string.Empty;
     public string Password { get; private set; } = string.Empty;
     public DateOnly BirthDate { get; private set; }
+    public UserRole Role { get; private set; } = UserRole.User;
 
     public User() { }
 

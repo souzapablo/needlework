@@ -29,6 +29,10 @@ public class NeedleWorkDbContext : DbContext
             .Properties<UnitOfMeasurement>()
             .HaveConversion<UnitOfMeasurementConverter>();
 
+        configurationBuilder
+            .Properties<UserRole>()
+            .HaveConversion<UserRoleConverter>();
+
         configurationBuilder.Properties<decimal>()
             .HavePrecision(6, 2);
 
