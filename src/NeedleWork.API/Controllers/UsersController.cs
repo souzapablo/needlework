@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NeedleWork.Application.Features.Users.Commands.Create;
+using NeedleWork.Application.Features.Users.Commands.Delete;
 using NeedleWork.Application.Features.Users.Queries.Get;
 using NeedleWork.Application.Features.Users.Queries.GetById;
 using NeedleWork.Application.ViewModels.Users;
@@ -46,5 +47,13 @@ public class UsersController : ControllerBase
     {
         long id = await _mediator.Send(command);
         return CreatedAtAction(nameof(GetUserById), new { Id = id }, command);
+    }
+
+    [HttpDelete("{id:long}")]
+    public async Task<IActionResult> DeleteUser(long id)
+    {
+        DeleteUserCommand command = new(id);
+        await _mediator.Send(command);
+        return NoContent();
     }
 }

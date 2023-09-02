@@ -48,6 +48,12 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync();
     }
 
+    public async Task UpdateAsync(User user)
+    {
+        _context.Users.Update(user);
+        await _context.SaveChangesAsync();
+    }
+
     public async Task<bool> IsEmailRegistered(string email)
     {
         return await _context.Users
