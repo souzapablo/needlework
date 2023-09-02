@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using NeedleWork.Core.Entities;
 using NeedleWork.Core.Repositories;
 
@@ -16,6 +17,12 @@ namespace NeedleWork.Infrastructure.Persistence.Repositories
         {
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsEmailRegistered(string email)
+        {
+            return await _context.Users
+                .AnyAsync(x => x.Email.Equals(email));
         }
     }
 }
