@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.10" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NeedleWork.Core\NeedleWork.Core.csproj" />
+    <ProjectReference Include="..\NeedleWork.Application\NeedleWork.Application.csproj" />
   </ItemGroup>
 
 </Project>

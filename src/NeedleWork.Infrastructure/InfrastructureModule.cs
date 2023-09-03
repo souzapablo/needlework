@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NeedleWork.Application.Abstractions;
 using NeedleWork.Core.Entities;
 using NeedleWork.Core.Repositories;
+using NeedleWork.Infrastructure.Authentication;
 using NeedleWork.Infrastructure.Persistence;
 using NeedleWork.Infrastructure.Persistence.Repositories;
 
@@ -13,7 +16,8 @@ public static class InfrastructureModule
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddPersistence(configuration)
-            .AddRepositories();
+            .AddRepositories()
+            .AddAuth();
         
         return services;
     }   
@@ -37,6 +41,16 @@ public static class InfrastructureModule
         services.AddTransient<IProductRepository, ProductRepository>();
         services.AddTransient<IUserRepository, UserRepository>();
 
+        return services;
+    }
+
+    private static IServiceCollection AddAuth(this IServiceCollection services)
+    {
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(); 
+
+        services.AddScoped<IJwtProvider, JwtProvider>();
+        
         return services;
     }
 }

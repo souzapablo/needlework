@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using NeedleWork.API.Middlewares;
+using NeedleWork.API.OptionsSetup;
 using NeedleWork.Application;
 using NeedleWork.Infrastructure;
 
@@ -20,6 +21,9 @@ IConfiguration configuration = builder.Configuration;
 builder.Services.AddInfrastructure(configuration)
     .AddApplication();
 
+builder.Services.ConfigureOptions<JwtOptionsSetup>();
+builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,6 +34,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
