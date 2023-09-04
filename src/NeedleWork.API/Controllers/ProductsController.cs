@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NeedleWork.Application.Features.Products.Commands.Create;
 using NeedleWork.Application.Features.Products.Commands.Delete;
@@ -12,6 +13,7 @@ namespace NeedleWork.API.Controllers;
 
 [ApiController]
 [Route("api/v1/products")]
+[Authorize]
 public class ProductsController : ControllerBase
 {
     private readonly IMediator _mediator;

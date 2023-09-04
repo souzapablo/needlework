@@ -1,3 +1,4 @@
+using NeedleWork.Application.Abstractions;
 using NeedleWork.Application.Features.Users.Commands.Create;
 using NeedleWork.Core.Exceptions;
 
@@ -6,6 +7,7 @@ namespace NeedleWork.UnitTests.Features.Commands.Users;
 public class CreateUserCommandHandlerTests
 {
     private readonly IUserRepository _userRepository = Substitute.For<IUserRepository>();
+    private readonly IAuthService _authService = Substitute.For<IAuthService>();
 
     [Fact]
     [DisplayName("Given a valid input should create product")]
@@ -13,7 +15,7 @@ public class CreateUserCommandHandlerTests
     {
         // Given
         CreateUserCommand command = new("Teste", "Testy", "test@email.com", "test", DateOnly.MaxValue);
-        CreateUserCommandHandler commandHandler = new(_userRepository);
+        CreateUserCommandHandler commandHandler = new(_userRepository, _authService);
         
         _userRepository.IsEmailRegistered(Arg.Any<string>())
             .Returns(false);
@@ -34,7 +36,7 @@ public class CreateUserCommandHandlerTests
     {
         // Given
         CreateUserCommand command = new("Teste", "Testy", "test@email.com", "test", DateOnly.MaxValue);
-        CreateUserCommandHandler commandHandler = new(_userRepository);
+        CreateUserCommandHandler commandHandler = new(_userRepository, _authService);
 
         _userRepository.IsEmailRegistered(Arg.Any<string>())
             .Returns(true);

@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NeedleWork.Application.Features.Users.Commands.Create;
 using NeedleWork.Application.Features.Users.Commands.Delete;
@@ -12,6 +13,7 @@ namespace NeedleWork.API.Controllers;
 
 [ApiController]
 [Route("api/v1/users")]
+[Authorize(Roles = Constants.AuthorizeAdmin)]
 public class UsersController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -43,6 +45,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> CreateUser(CreateUserCommand command)
     {
         long id = await _mediator.Send(command);
