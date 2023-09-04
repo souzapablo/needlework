@@ -50,6 +50,7 @@ public static class InfrastructureModule
             .AddJwtBearer(); 
 
         services.AddScoped<IJwtProvider, JwtProvider>();
+        services.AddScoped<IAuthService, AuthService>();
         
         return services;
     }

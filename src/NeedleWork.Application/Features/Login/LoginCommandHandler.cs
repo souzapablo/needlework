@@ -10,15 +10,22 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, string>
 {
     private readonly IUserRepository _userRepository;
     private readonly IJwtProvider _jwtProvider;
-    public LoginCommandHandler(IUserRepository userRepository, IJwtProvider jwtProvider)
+    private readonly IAuthService _authService;
+    public LoginCommandHandler(
+        IUserRepository userRepository, 
+        IJwtProvider jwtProvider,
+        IAuthService authService)
     {
         _userRepository = userRepository;
         _jwtProvider = jwtProvider;
+        _authService = authService; 
     }
 
     public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        User? user = await _userRepository.GetByEmailAndPasswordAsync(request.Email, request.Password);
+        string hasPassword = _authService.HashPassword(request.Password);
+
+        User? user = await _userRepository.GetByEmailAndPasswordAsync(request.Email, hasPassword);
 
         if (user is null)
             throw new InvalidCredentialsException();
