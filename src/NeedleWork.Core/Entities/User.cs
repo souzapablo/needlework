@@ -5,13 +5,6 @@ namespace NeedleWork.Core.Entities;
 
 public class User : BaseEntity
 {
-    public string FirstName { get; private set; } = string.Empty;
-    public string LastName { get; private set; } = string.Empty;
-    public string Email { get; private set; } = string.Empty;
-    public string Password { get; private set; } = string.Empty;
-    public DateOnly BirthDate { get; private set; }
-    public UserRole Role { get; private set; } = UserRole.User;
-
     public User() { }
 
     public User(string firstName, string lastName, string email, string password, DateOnly birthDate)
@@ -22,6 +15,13 @@ public class User : BaseEntity
         Password = password;
         BirthDate = birthDate;
     }
+
+    public string FirstName { get; private set; } = string.Empty;
+    public string LastName { get; private set; } = string.Empty;
+    public string Email { get; private set; } = string.Empty;
+    public string Password { get; private set; } = string.Empty;
+    public DateOnly BirthDate { get; private set; }
+    public UserRole Role { get; private set; } = UserRole.User;
 
     public string FullName => $"{FirstName} {LastName}";
 }
