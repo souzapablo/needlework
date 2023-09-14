@@ -2,8 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NeedleWork.Application.Features.Purchases.Commands.Create;
+using NeedleWork.Application.Features.Purchases.Queries.Get;
 using NeedleWork.Application.Features.Purchases.Queries.GetById;
 using NeedleWork.Application.ViewModels.Purchases;
+using NeedleWork.Core.Shared;
+using NeedleWork.Infrastructure.Shared;
 
 namespace NeedleWork.API.Controllers;
 
@@ -17,6 +20,22 @@ public class PurchasesController : ControllerBase
     public PurchasesController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetPurchases(
+        string? searchTerm,
+        string? sortColumn,
+        string? sortOrder,
+        int page = Constants.Page,
+        int pageSize = Constants.PageSize
+    )
+    {
+        GetPurchasesQuery query = new(searchTerm, sortColumn, sortOrder, page, pageSize);
+        
+        PagedList<PurchaseViewModel> result = await _mediator.Send(query);
+       
+        return Ok(result);
     }
 
     [HttpGet("{id:long}")]

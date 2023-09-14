@@ -12,6 +12,6 @@ public class PurchasItemConfiguration : IEntityTypeConfiguration<PurchaseItem>
         builder.HasQueryFilter(x => x.IsActive);
 
         builder.HasOne(x => x.Product)
-            .WithOne();
+            .WithMany();
     }
 }
