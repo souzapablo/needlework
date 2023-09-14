@@ -49,6 +49,12 @@ public class PurchaseRepository : IPurchaseRepository
         await _context.SaveChangesAsync();
     }
 
+    public async Task UpdateAsync(Purchase purchase)
+    {
+        _context.Update(purchase);
+        await _context.SaveChangesAsync();
+    }
+
     private static Expression<Func<Purchase, object>> GetSortProperty(string? sortColumn)
     {
         return sortColumn?.ToLower() switch

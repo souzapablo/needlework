@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NeedleWork.Application.Features.Purchases.Commands.Create;
+using NeedleWork.Application.Features.Purchases.Commands.Delete;
 using NeedleWork.Application.Features.Purchases.Queries.Get;
 using NeedleWork.Application.Features.Purchases.Queries.GetById;
 using NeedleWork.Application.ViewModels.Purchases;
@@ -24,14 +25,14 @@ public class PurchasesController : ControllerBase
 
     [HttpGet]
     public async Task<IActionResult> GetPurchases(
-        string? searchTerm,
+        string? userId,
         string? sortColumn,
         string? sortOrder,
         int page = Constants.Page,
         int pageSize = Constants.PageSize
     )
     {
-        GetPurchasesQuery query = new(searchTerm, sortColumn, sortOrder, page, pageSize);
+        GetPurchasesQuery query = new(userId, sortColumn, sortOrder, page, pageSize);
         
         PagedList<PurchaseViewModel> result = await _mediator.Send(query);
        
@@ -53,5 +54,15 @@ public class PurchasesController : ControllerBase
     {
         long id = await _mediator.Send(command);
         return CreatedAtAction(nameof(GetById), new { Id = id }, command);
+    }
+
+    [HttpDelete("{id:long}")]
+    public async Task<IActionResult> DeletePurchase(long id)
+    {
+        DeletePurchaseCommand command = new(id);
+
+        await _mediator.Send(command);
+
+        return NoContent();
     }
 }
