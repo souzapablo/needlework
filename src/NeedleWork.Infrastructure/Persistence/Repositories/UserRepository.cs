@@ -67,6 +67,12 @@ public class UserRepository : IUserRepository
             .AnyAsync(x => x.Email.Equals(email));
     }
 
+    public async Task<bool> VerifyIfExists(long id)
+    {
+        return await _context.Users
+            .AnyAsync(x => x.Id == id);
+    }
+
     private static Expression<Func<User, object>> GetSortProperty(string? sortColumn)
     {
         return sortColumn?.ToLower() switch
@@ -77,4 +83,6 @@ public class UserRepository : IUserRepository
             _ => user => user.Id,
         };;
     }
+
+
 }

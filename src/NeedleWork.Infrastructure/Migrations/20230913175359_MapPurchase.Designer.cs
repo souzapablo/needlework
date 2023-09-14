@@ -12,7 +12,7 @@ using NeedleWork.Infrastructure.Persistence;
 namespace NeedleWork.Infrastructure.Migrations
 {
     [DbContext(typeof(NeedleWorkDbContext))]
-    [Migration("20230913140313_MapPurchase")]
+    [Migration("20230913175359_MapPurchase")]
     partial class MapPurchase
     {
         /// <inheritdoc />
@@ -95,7 +95,7 @@ namespace NeedleWork.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Purchase");
+                    b.ToTable("Purchases");
                 });
 
             modelBuilder.Entity("NeedleWork.Core.Entities.PurchaseItem", b =>
@@ -132,7 +132,7 @@ namespace NeedleWork.Infrastructure.Migrations
 
                     b.HasIndex("PurchaseId");
 
-                    b.ToTable("PurchaseItem");
+                    b.ToTable("PurchaseItems");
                 });
 
             modelBuilder.Entity("NeedleWork.Core.Entities.Supplier", b =>

@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 namespace NeedleWork.UnitTests.Entities;
 
 public class BaseEntityTests

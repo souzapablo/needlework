@@ -48,11 +48,11 @@ public class SupplierRepository : ISupplierRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<Supplier?> GetByIdAsync(long Id)
+    public async Task<Supplier?> GetByIdAsync(long id)
     {
         return await _context.Suppliers
             .Include(x => x.Products)
-            .SingleOrDefaultAsync(x => x.Id == Id);
+            .SingleOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task UpdateAsync(Supplier supplier)
@@ -61,10 +61,10 @@ public class SupplierRepository : ISupplierRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<bool> VerifyIfExists(long Id)
+    public async Task<bool> VerifyIfExists(long id)
     {
         return await _context.Suppliers
-            .AnyAsync(x => x.Id == Id);
+            .AnyAsync(x => x.Id == id);
     }
 
     private static Expression<Func<Supplier, object>> GetSortProperty(string? sortColumn)

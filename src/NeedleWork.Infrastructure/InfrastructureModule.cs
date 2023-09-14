@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NeedleWork.Application.Abstractions;
-using NeedleWork.Core.Entities;
 using NeedleWork.Core.Repositories;
 using NeedleWork.Infrastructure.Authentication;
 using NeedleWork.Infrastructure.Persistence;
@@ -40,6 +39,7 @@ public static class InfrastructureModule
         services.AddTransient<ISupplierRepository, SupplierRepository>();
         services.AddTransient<IProductRepository, ProductRepository>();
         services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<IPurchaseRepository, PurchaseRepository>();
 
         return services;
     }

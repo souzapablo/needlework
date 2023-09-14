@@ -4,9 +4,9 @@ namespace NeedleWork.Core.Entities;
 public class PurchaseItem : BaseEntity
 {
     public PurchaseItem() { }
-    public PurchaseItem(long productId, decimal quantity)
+    public PurchaseItem(Product product, decimal quantity)
     {
-        ProductId = productId;
+        Product = product;
         Quantity = quantity;
     }
 

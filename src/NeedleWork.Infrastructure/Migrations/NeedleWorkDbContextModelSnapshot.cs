@@ -92,7 +92,7 @@ namespace NeedleWork.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Purchase");
+                    b.ToTable("Purchases");
                 });
 
             modelBuilder.Entity("NeedleWork.Core.Entities.PurchaseItem", b =>
@@ -129,7 +129,7 @@ namespace NeedleWork.Infrastructure.Migrations
 
                     b.HasIndex("PurchaseId");
 
-                    b.ToTable("PurchaseItem");
+                    b.ToTable("PurchaseItems");
                 });
 
             modelBuilder.Entity("NeedleWork.Core.Entities.Supplier", b =>

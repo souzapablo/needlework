@@ -11,6 +11,8 @@ public class NeedleWorkDbContext : DbContext
     public DbSet<Supplier> Suppliers { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Purchase> Purchases { get; set; }
+    public DbSet<PurchaseItem> PurchaseItems { get; set; }
     public NeedleWorkDbContext(DbContextOptions<NeedleWorkDbContext> options)
         : base(options)
     {
