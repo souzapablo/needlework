@@ -1,4 +1,6 @@
 ﻿using NeedleWork.Core.Entities.Shared;
+using NeedleWork.Core.Exceptions;
+using NeedleWork.Core.Shared;
 
 namespace NeedleWork.Core.Entities;
 public class Purchase : BaseEntity
@@ -20,6 +22,7 @@ public class Purchase : BaseEntity
 
     public void AddItem(PurchaseItem item)
     {
+        VerifyIfExists(item.Product);
         Items.Add(item);
         CalculateTotal();
     }
@@ -34,5 +37,14 @@ public class Purchase : BaseEntity
         }
 
         Total = total;
+    }
+
+    private void VerifyIfExists(Product product)
+    {
+        foreach (PurchaseItem item in Items)
+        {
+            if (item.Product == product)
+                throw new PurchaseItemAlreadyPresentException(Errors.PurchaseItemAlreadyPresent(product.Description));
+        }
     }
 }

@@ -63,7 +63,7 @@ public class GlobalExceptionHandlingMiddleware : IMiddleware
         }
         catch (EmailAlreadyRegisteredException ex)
         {
-                        context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+            context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
             _logger.LogError(ex, ex.Message);
 
             ProblemDetails problem = new() 
@@ -80,6 +80,44 @@ public class GlobalExceptionHandlingMiddleware : IMiddleware
             
             await context.Response.WriteAsync(json);
         }
+        catch (InvalidCredentialsException ex) 
+        {
+            context.Response.StatusCode = (int) HttpStatusCode.Unauthorized;
+            _logger.LogError(ex, ex.Message);
+
+            ProblemDetails problem = new() 
+            {
+                Status = (int) HttpStatusCode.Unauthorized,
+                Type = "Unauthorized",
+                Title = "Invalid credentials",
+                Detail = ex.Message
+            };
+
+            var json = JsonSerializer.Serialize(problem);   
+
+            context.Response.ContentType = "application/json";
+            
+            await context.Response.WriteAsync(json); 
+        }
+        catch (PurchaseItemAlreadyPresentException ex)
+        {
+            context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+            _logger.LogError(ex, ex.Message);
+
+            ProblemDetails problem = new() 
+            {
+                Status = (int) HttpStatusCode.BadRequest,
+                Type = "Bad request",
+                Title = "Invalid input",
+                Detail = ex.Message
+            };
+
+            var json = JsonSerializer.Serialize(problem);   
+
+            context.Response.ContentType = "application/json";
+            
+            await context.Response.WriteAsync(json); 
+        }
         catch (Exception ex)
         {
             context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
@@ -89,8 +127,8 @@ public class GlobalExceptionHandlingMiddleware : IMiddleware
             {
                 Status = (int) HttpStatusCode.InternalServerError,
                 Type = "Server error",
-                Title = "Server error",
-                Detail = "An internal server error has occured"
+                Title = "An internal server error has occured",
+                Detail = "Contact admin for more information"
             };
 
             var json = JsonSerializer.Serialize(problem);   

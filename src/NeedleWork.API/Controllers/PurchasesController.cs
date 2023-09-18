@@ -1,10 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NeedleWork.Application.Features.Purchases.Commands.AddItem;
 using NeedleWork.Application.Features.Purchases.Commands.Create;
 using NeedleWork.Application.Features.Purchases.Commands.Delete;
 using NeedleWork.Application.Features.Purchases.Queries.Get;
 using NeedleWork.Application.Features.Purchases.Queries.GetById;
+using NeedleWork.Application.InputModels.Purchases;
 using NeedleWork.Application.ViewModels.Purchases;
 using NeedleWork.Core.Shared;
 using NeedleWork.Infrastructure.Shared;
@@ -54,6 +56,17 @@ public class PurchasesController : ControllerBase
     {
         long id = await _mediator.Send(command);
         return CreatedAtAction(nameof(GetById), new { Id = id }, command);
+    }
+
+
+    [HttpPatch("{id:long}/add-item")]
+    public async Task<IActionResult> AddPurchaseItem(long id, AddPurchaseItemInputModel input)
+    {
+        AddPurchaseItemCommand command = new(id, input.ProductId, input.Quantity);
+
+        await _mediator.Send(command);
+
+        return NoContent();
     }
 
     [HttpDelete("{id:long}")]
