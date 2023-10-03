@@ -18,7 +18,7 @@ public static class InfrastructureModule
         services.AddPersistence(configuration)
             .AddRepositories()
             .AddAuth()
-            .AddMemoryCache();
+            .AddCaching(configuration);
         
         return services;
     }   
@@ -55,6 +55,16 @@ public static class InfrastructureModule
         services.AddScoped<IJwtProvider, JwtProvider>();
         services.AddScoped<IAuthService, AuthService>();
         
+        return services;
+    }
+
+    private static IServiceCollection AddCaching(this IServiceCollection services, IConfiguration configuration)
+    {
+        string conneciton = configuration.GetConnectionString("RedisCs")!;
+        services.AddStackExchangeRedisCache(redisOptions => 
+        {
+            redisOptions.Configuration = conneciton;
+        });
         return services;
     }
 }
