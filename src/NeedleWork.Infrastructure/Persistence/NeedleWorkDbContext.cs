@@ -13,6 +13,7 @@ public class NeedleWorkDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Purchase> Purchases { get; set; }
     public DbSet<PurchaseItem> PurchaseItems { get; set; }
+    public DbSet<Address> Addresses { get; set;}
     public NeedleWorkDbContext(DbContextOptions<NeedleWorkDbContext> options)
         : base(options)
     {

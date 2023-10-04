@@ -9,6 +9,7 @@ public static class UserFaker
             .RuleFor(x => x.LastName, f => f.Name.LastName())
             .RuleFor(x => x.Email, f => f.Internet.Email())
             .RuleFor(x => x.BirthDate, GenerateDate())
+            .RuleFor(x => x.Addresses, f => new())
             .Generate();
         
         private static DateOnly GenerateDate()

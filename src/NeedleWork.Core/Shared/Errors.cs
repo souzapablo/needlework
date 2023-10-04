@@ -15,4 +15,7 @@ public static class Errors
     
     public static string PurchaseItemAlreadyPresent(string product) =>
         string.Format("{0} already present in purchase list", product);
+
+    public static string AddressNotFound(string cep) =>
+        string.Format("Address with CEP {0} not found", cep);
 }

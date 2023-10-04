@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NeedleWork.Application.Abstractions;
-using NeedleWork.Core.Entities;
 using NeedleWork.Core.Repositories;
+using NeedleWork.Core.Services;
 using NeedleWork.Infrastructure.Authentication;
 using NeedleWork.Infrastructure.Persistence;
 using NeedleWork.Infrastructure.Persistence.Repositories;
+using NeedleWork.Infrastructure.Services;
 
 namespace NeedleWork.Infrastructure;
 
@@ -18,8 +19,9 @@ public static class InfrastructureModule
         services.AddPersistence(configuration)
             .AddRepositories()
             .AddAuth()
-            .AddCaching(configuration);
-        
+            .AddCaching(configuration)
+            .AddServices();
+
         return services;
     }   
 
@@ -65,6 +67,13 @@ public static class InfrastructureModule
         {
             redisOptions.Configuration = conneciton;
         });
+        return services;
+    }
+
+    private static IServiceCollection AddServices(this IServiceCollection services)
+    {
+        services.AddScoped<IViaCepService, ViaCepService>();
+        
         return services;
     }
 }

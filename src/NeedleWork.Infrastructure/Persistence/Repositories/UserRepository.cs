@@ -39,6 +39,7 @@ public class UserRepository : IUserRepository
     public async Task<User?> GetByIdAsync(long id)
     {
         return await _context.Users
+            .Include(x => x.Addresses)
             .SingleOrDefaultAsync(x => x.Id == id);
     }
 
