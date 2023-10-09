@@ -27,13 +27,18 @@ public static class InfrastructureModule
 
     private static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
-        string? connectionString = configuration.GetConnectionString("NeedleWorkCs");
-
-        if (string.IsNullOrEmpty(connectionString))
-            throw new ArgumentNullException("ConnectionString");
+        string? dbHost = Environment.GetEnvironmentVariable("DB_HOST");
+        string? dbName = Environment.GetEnvironmentVariable("DB_NAME");
+        string? dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
+        string? connectionString = $"Server={dbHost};Database={dbName};User Id=sa;Password={dbPassword}; TrustServerCertificate=True";
 
         services.AddDbContext<NeedleWorkDbContext>(options => 
-            options.UseSqlServer(connectionString));
+            options.UseSqlServer(connectionString,
+                    options => options.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(30),
+                    errorNumbersToAdd: null)
+                ));
 
         return services;
     }

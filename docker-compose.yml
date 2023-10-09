@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  needlework.redis:
+    container_name: NeedleWorkRedis
+    image: redis
+    ports:
+        - "8003:6379" 
+  needlework.db:
+    container_name: NeedleWorkDb
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+        - "8002:1433"
+    environment:
+        - ACCEPT_EULA=Y
+        - MSSQL_SA_PASSWORD=Camundongo@123
+  needlework.api:
+    container_name: NeedleWork
+    image: ${DOCKER_REGISTRY-}needleworkapi
+    build:
+      context: .
+      dockerfile: src/NeedleWork.API/Dockerfile
+    ports:
+        - "8001:80"
+    depends_on:
+        - needlework.db
+        - needlework.redis
+    environment:
+        - DB_HOST=needlework.db
+        - DB_NAME=NeedleWorkDb
+        - DB_SA_PASSWORD=Camundongo@123
