@@ -1,5 +1,6 @@
 using MediatR;
 using NeedleWork.Application.Abstractions;
+using NeedleWork.Application.Models.Users;
 using NeedleWork.Core.Entities;
 using NeedleWork.Core.Exceptions;
 using NeedleWork.Core.Repositories;
@@ -25,7 +26,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, string>
     {
         string hasPassword = _authService.HashPassword(request.Password);
 
-        User? user = await _userRepository.GetByEmailAndPasswordAsync(request.Email, hasPassword);
+        UserLoginDTO? user = await _userRepository.GetByEmailAndPasswordAsync(request.Email, hasPassword);
 
         if (user is null)
             throw new InvalidCredentialsException();

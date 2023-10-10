@@ -1,5 +1,9 @@
 using System.Linq.Expressions;
+using Dapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using NeedleWork.Application.Models.Users;
 using NeedleWork.Core.Entities;
 using NeedleWork.Core.Repositories;
 
@@ -8,18 +12,20 @@ namespace NeedleWork.Infrastructure.Persistence.Repositories;
 public class UserRepository : IUserRepository
 {
     private readonly NeedleWorkDbContext _context;
+    private readonly string _connectionString;
 
-    public UserRepository(NeedleWorkDbContext context)
+    public UserRepository(NeedleWorkDbContext context, IConfiguration configuration)
     {
         _context = context;
+        _connectionString = configuration.GetConnectionString("NeedleWorkCs")!;
     }
-    
+
     public Task<List<User>> GetAsync(string? searchTerm, string? sortColumn, string? sortOrder, int page, int pageSize)
     {
         IQueryable<User> users = _context.Users;
         if (!string.IsNullOrWhiteSpace(searchTerm))
         {
-            users = users.Where(x => 
+            users = users.Where(x =>
                 x.FirstName.Contains(searchTerm) ||
                 x.LastName.Contains(searchTerm));
         }
@@ -31,7 +37,7 @@ public class UserRepository : IUserRepository
         else
         {
             users = users.OrderBy(GetSortProperty(sortColumn));
-        }            
+        }
 
         return users.ToListAsync();
     }
@@ -43,11 +49,23 @@ public class UserRepository : IUserRepository
             .SingleOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<User?> GetByEmailAndPasswordAsync(string email, string password)
+    public async Task<UserLoginDTO?> GetByEmailAndPasswordAsync(string email, string password)
     {
-        return await _context.Users
-            .SingleOrDefaultAsync(x => x.Email.Equals(email) &&
-                x.Password.Equals(password));
+        using SqlConnection sqlConnection = new SqlConnection(_connectionString);
+
+        await sqlConnection.OpenAsync();
+
+        string script = @"SELECT Id, Email, Role
+                          FROM Users
+                          WHERE Email = @email and Password = @password";
+
+        return await sqlConnection.QuerySingleAsync<UserLoginDTO?>(
+            script,
+            new
+            {
+                email,
+                password
+            });
     }
 
     public async Task CreateAsync(User user)
@@ -82,7 +100,7 @@ public class UserRepository : IUserRepository
             "last-name" => user => user.LastName,
             "birth-date" => user => user.BirthDate,
             _ => user => user.Id,
-        };;
+        }; ;
     }
 
 

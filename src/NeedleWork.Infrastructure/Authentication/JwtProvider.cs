@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NeedleWork.Application.Abstractions;
+using NeedleWork.Application.Models.Users;
 using NeedleWork.Core.Entities;
 
 namespace NeedleWork.Infrastructure.Authentication;
@@ -17,7 +18,7 @@ public class JwtProvider : IJwtProvider
         _options = options.Value;
     }
 
-    public string Generate(User user)
+    public string Generate(UserLoginDTO user)
     {
         Claim[] claims = new Claim [] 
         {
