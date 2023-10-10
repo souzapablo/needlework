@@ -8,6 +8,7 @@ using NeedleWork.Core.Services;
 using NeedleWork.Infrastructure.Authentication;
 using NeedleWork.Infrastructure.Persistence;
 using NeedleWork.Infrastructure.Persistence.Repositories;
+using NeedleWork.Infrastructure.Persistence.Repositories.Interfaces;
 using NeedleWork.Infrastructure.Services;
 
 namespace NeedleWork.Infrastructure;
@@ -45,6 +46,7 @@ public static class InfrastructureModule
         services.AddTransient<IProductRepository, ProductRepository>();
         services.AddTransient<IUserRepository, UserRepository>();
         services.AddTransient<IPurchaseRepository, PurchaseRepository>();
+        services.AddTransient<ISqlConnectionFactory, SqlConnectionFactory>();
 
         return services;
     }

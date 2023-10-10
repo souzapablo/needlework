@@ -1,7 +1,6 @@
 using MediatR;
 using NeedleWork.Application.Abstractions;
 using NeedleWork.Application.Models.Users;
-using NeedleWork.Core.Entities;
 using NeedleWork.Core.Exceptions;
 using NeedleWork.Core.Repositories;
 

@@ -2,22 +2,22 @@ using System.Linq.Expressions;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using NeedleWork.Application.Models.Users;
 using NeedleWork.Core.Entities;
 using NeedleWork.Core.Repositories;
+using NeedleWork.Infrastructure.Persistence.Repositories.Interfaces;
 
 namespace NeedleWork.Infrastructure.Persistence.Repositories;
 
 public class UserRepository : IUserRepository
 {
     private readonly NeedleWorkDbContext _context;
-    private readonly string _connectionString;
+    private readonly ISqlConnectionFactory _connectionFactory;
 
-    public UserRepository(NeedleWorkDbContext context, IConfiguration configuration)
+    public UserRepository(NeedleWorkDbContext context, ISqlConnectionFactory connectionFactory)
     {
         _context = context;
-        _connectionString = configuration.GetConnectionString("NeedleWorkCs")!;
+        _connectionFactory = connectionFactory;
     }
 
     public Task<List<User>> GetAsync(string? searchTerm, string? sortColumn, string? sortOrder, int page, int pageSize)
@@ -51,9 +51,7 @@ public class UserRepository : IUserRepository
 
     public async Task<UserLoginDTO?> GetByEmailAndPasswordAsync(string email, string password)
     {
-        using SqlConnection sqlConnection = new SqlConnection(_connectionString);
-
-        await sqlConnection.OpenAsync();
+        await using SqlConnection sqlConnection =  _connectionFactory.CreateConnection();
 
         string script = @"SELECT Id, Email, Role
                           FROM Users

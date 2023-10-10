@@ -5,7 +5,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NeedleWork.Application.Abstractions;
 using NeedleWork.Application.Models.Users;
-using NeedleWork.Core.Entities;
 
 namespace NeedleWork.Infrastructure.Authentication;
 
